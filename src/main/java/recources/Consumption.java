@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import util.DBConnection;
 
-public class ConsumptionResource {
+public class Consumption {
 	
 	//DBConnection object to connect to database
 	DBConnection dbConnect = new DBConnection();
