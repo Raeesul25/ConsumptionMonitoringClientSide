@@ -1,3 +1,8 @@
+<%@page import="recources.Consumption"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="util.UserDBConnection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -22,90 +27,43 @@
 	<div class="container">
 	<div class="row">
 	<div class="col-12">
-		<h1 align="center">Concept Management</h1>
+		<h1 align="center">Consumption Monitoring Management</h1>
 		
 		<!--------------------- Start of form  ------------------------------->
 		<form id="formConcept" name="formConcept">
-			<input id="conceptName" name="conceptName" type="text" class="form-control form-control-sm" placeholder="Concept name">
+			<select id = "userID" name = "userID" class="form-control form-control-sm">
+            	<option class="dropdown-menu">Researcher Name</option>
+                    <%
+                    	try{
+                    		Connection con = userConn.connect();
+                    		Statement st = con.createStatement();
+                    		String query = "select * from researcher";
+                    		ResultSet rs = st.executeQuery(query);
+                    			
+                    		while(rs.next()){
+                    			%>
+                    			<option value="<%=rs.getString("researcherCode")%>"><%=rs.getString("userName") %></option>
+                    				<%
+                    		}
+                    		con.close();
+                    	}catch(Exception e){
+                    			
+                   		}
+                   	%>
+            </select>
 			<br> 
 		
-			<input id="conceptDesc" name="conceptDesc" type="text"class="form-control form-control-sm" placeholder="Concept description">
+			<input id="month" name="month" type="text"class="form-control form-control-sm" placeholder="Month">
+			<br> 
+            
+            <input id="premonreading" name="premonreading" type="text" class="form-control form-control-sm" placeholder="Previous Month Reading">
 			<br> 
 			
-			<div class="form-row">
-            	<div class="col">
-                 	<input id="startDate" name="startDate" type="text" class="form-control form-control-sm" placeholder="Start date">
-                    <br>
-                </div>
-        	    <div class="col">
-                    <input id="deadline" name="deadline" type="text" class="form-control form-control-sm" placeholder="Deadline">
-                    <br>
-                </div>
-            </div>
-			
-			<div class="form-row">
-                <div class="col">
-                    <input id="pledgeGoal" name="pledgeGoal" type="text" class="form-control form-control-sm" placeholder="PledgeGoal">
-                    <br>
-                </div>
-                <div class="col">
-                     <input id="reward" name="reward" type="text" class="form-control form-control-sm" placeholder="Reward">
-                     <br>
-                </div>
-             </div>
-			
-			<input id="workUpdt" name="workUpdt" type="text"class="form-control form-control-sm" placeholder="Work Update">
-			<br>
+			<input id="curmonreading" name="curmonreading" type="text"class="form-control form-control-sm" placeholder="Current Month Reading">
+			<br> 
             
-            <div class="form-row">
-                <div class="col">
-                    <select id = "researcherID" name = "researcherID" class="form-control form-control-sm">
-                    	<option class="dropdown-menu">Researcher Name</option>
-                    	<%
-                    		try{
-                    			Connection con = userConn.connect();
-                    			Statement st = con.createStatement();
-                    			String query = "select * from researcher";
-                    			ResultSet rs = st.executeQuery(query);
-                    			
-                    			while(rs.next()){
-                    				%>
-                    				<option value="<%=rs.getString("researcherCode")%>"><%=rs.getString("userName") %></option>
-                    				<%
-                    			}
-                    			con.close();
-                    		}catch(Exception e){
-                    			
-                    		}
-                    	%>
-                    </select>
-                </div>
-            	<div class="col">
-                   <select id = "manufactID" name="manufactID" class="form-control form-control-sm">
-                    	<option class="dropdown-menu">Manufacturer Name</option>
-                    	<%
-                    		try{
-                    			Connection con = userConn.connect();
-                    			Statement st = con.createStatement();
-                    			String query = "select * from manufacturer";
-                    			ResultSet rs = st.executeQuery(query);
-                    			
-                    			while(rs.next()){
-                    				%>
-                    				<option value="<%=rs.getString("manufacturerCode")%>"><%=rs.getString("userName") %></option>
-                    				<%
-                    			}
-                    			con.close();
-                    		}catch(Exception e){
-                    			
-                    		}
-                    	%>
-                    </select>
-                    <br>
-                </div>
-            </div>
-			<input id="btnSave" name="btnSave" type="button" value="Add Concept" class="btn btn-primary">
-            <input type="hidden" id="hidConceptIDSave" name="hidConceptIDSave" value="">
+			<input id="btnSave" name="btnSave" type="button" value="Add Consumption" class="btn btn-primary">
+            <input type="hidden" id="conID" name="conID" value="">
 		</form>
 		<!--------------------- End of form  ------------------------------->
 		
@@ -118,8 +76,8 @@
 		<!--------------------- Display concepts  ------------------------------->
 		<div id="divItemsGrid">
 		<%
-			Concept conceptObj = new Concept();
-			out.print(conceptObj.readMyConcepts());
+			Consumption consumptionObj = new Consumption();
+			out.print(consumptionObj.readConsumption());
 		%>
 		</div>
 
