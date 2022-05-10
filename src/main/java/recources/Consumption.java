@@ -42,10 +42,12 @@ public class Consumption {
 			// execute the statement
 			preparedStmt.execute();
 			con.close();
-			output = "Consumption Inserted successfully";
+			
+			String newConcepts = readConsumption();
+			output = "{\"status\":\"success\", \"data\": \"" +newConcepts + "\"}";
 			
 		}catch (Exception e){
-			output = "Error while inserting the consumption.";
+			output = "{\"status\":\"error\", \"data\":\"Error while launching the consumption\"}";
 			System.err.println(e.getMessage());
 		}
 			
@@ -84,10 +86,12 @@ public class Consumption {
 			preparedStmt.execute();
 		
 			con.close();
-			output = "Consumption Details Updated successfully";
+			
+			String newItems = readConsumption();
+			output = "{\"status\":\"success\", \"data\": \"" +newItems + "\"}";
 		
 		}catch (Exception e){
-			output = "Error while updating the consumption.";
+			output = "{\"status\":\"error\", \"data\":\"Error while updating the consumption\"}";
 			System.err.println(e.getMessage());
 		}
 		
@@ -114,9 +118,12 @@ public class Consumption {
 			preparedStmt.execute();
 
 			con.close();
-			output = "Consumption Deleted successfully";
+			
+			String newItems = readConsumption();
+			output = "{\"status\":\"success\", \"data\": \"" +newItems + "\"}";
+			
 		}catch (Exception e){
-			output = "Error while deleting the Consumption.";
+			output = "{\"status\":\"error\", \"data\":\"Error while deleting the consumption\"}";
 			System.err.println(e.getMessage());
 		}
 		
@@ -160,20 +167,11 @@ public class Consumption {
 				output += "<td>" + conunits + "</td>";
 			
 				// button for updating a consumption
-				output += "<td><form method='post' action=''>"
-				+ "<input name='btnUpdate' "
-				+ " type='submit' value='Update' class='btn btn-secondary'>"
-				+ "<input name='conID' type='hidden' "
-				+ " value=' " + conID + "'>"
-				+ "</form></td>";
+				output += "<td><input name='btnUpdate' type='button' value='Update' "
+						+ "class='btnUpdate btn btn-secondary' data-conID='" + conID + "'></td>"
+						+ "<td><input name='btnRemove' type='button' value='Remove' "
+						+ "class='btnRemove btn btn-danger' data-conID='" + conID + "'></td></tr>";
 				
-				// button for deleting a consumption
-				output += "<td><form method='post' action=''>"
-						+ "<input name='btnDelete' "
-						+ " type='submit' value='Delete' class='btn btn-secondary'>"
-						+ "<input name='conID' type='hidden' "
-						+ " value=' " + conID + "'>"
-						+ "</form></td>";
 
 			}
 			
@@ -191,70 +189,5 @@ public class Consumption {
 			
 	}
 	
-	// -- Method to read specific user's consumption---
-	public String specificUserConsumption(String userID)
-	{
-		String output = "";
-		try
-		{
-			Connection con = dbConnect.connect();
-			if (con == null)
-			{
-				return dbErrorMessage;
-			}
-			
-			// Displaying the read consumptions
-			output = "<h2>" + userID + " Consumption Details" + "<h2><br>"; 
-			output += "<table border='1'><tr><th>Consumption ID</th>"
-			+"<th>Month</th>"
-			+ "<th>Previous Month Reading</th>"
-			+ "<th>Current Month Reading</th>"
-			+ "<th>Consumption Units</th>"
-			+ "<th>Update</th></tr>";
-			
-			// Retrieving the consumption
-			String query = "select conID, month, preMonReading, curMonReading, conUnits from consumption where userID = '"+userID+"' ";
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			
-			
-			// iterate through the rows in the result set
-			while (rs.next())
-			{
-				String conID = Integer.toString(rs.getInt("conID"));
-				String month = rs.getString("month");
-				String premonread = Integer.toString(rs.getInt("preMonReading"));
-				String curmonread = Integer.toString(rs.getInt("curMonReading"));
-				String conunits = Integer.toString(rs.getInt("conUnits"));
-				
-				
-				// Add a row into the HTML table
-				output += "<tr><td>" + conID + "</td>";
-				output += "<td>" + month + "</td>";
-				output += "<td>" + premonread + "</td>";
-				output += "<td>" + curmonread + "</td>";
-				output += "<td>" + conunits + "</td>";
-				
-				// button for updating a consumption
-				output += "<td><form method='post' action=''>"
-				+ "<input name='btnUpdate' "
-				+ " type='submit' value='Update' class='btn btn-secondary'>"
-				+ "<input name='conID' type='hidden' "
-				+ " value=' " + conID + "'>"
-				+ "</form></td></tr>";
-				
-				}
-				con.close();
-				
-				// Completion of the HTML table
-				output += "</table>";
-			}
-			catch (Exception e)
-			{
-				output = "Error while retrieving user consumption details!!";
-				System.out.println(e.getMessage());
-			}
-			return output;
-	}
 
 }

@@ -17,13 +17,13 @@ import recources.Consumption;
  * Servlet implementation class consumptionAPI
  */
 @WebServlet("/consumptionAPI")
-public class consumptionAPI extends HttpServlet {
+public class ConsumptionAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     Consumption con = new Consumption();   
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public consumptionAPI() {
+    public ConsumptionAPI() {
         super();
         // TODO Auto-generated constructor stub
     }

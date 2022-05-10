@@ -1,4 +1,4 @@
-#formConcept {
+#formCon {
     border: 1px solid black;
     padding: 3%;
 }
@@ -8,10 +8,6 @@
     margin-left: 25%;
 }
 
-#formPledge {
-    border: 1px solid black;
-    padding: 3%;
-}
 
 #btnView {
     width: 50%;

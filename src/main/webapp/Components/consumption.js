@@ -25,12 +25,12 @@ $(document).on("click", "#btnSave", function(event)
 	}
 		
 	// If valid------------------------
-	var type = ($("#hidConceptIDSave").val() == "") ? "POST" : "PUT";
+	var type = ($("#hidConIDSave").val() == "") ? "POST" : "PUT";
 	$.ajax(
 	{
-		url : "ConceptAPI",
+		url : "ConsumptionAPI",
 		type : type,
-		data : $("#formConcept").serialize(),
+		data : $("#formCon").serialize(),
 		dataType : "text",
 		complete : function(response, status){
 			onConceptSaveComplete(response.responseText, status);
@@ -40,7 +40,7 @@ $(document).on("click", "#btnSave", function(event)
 
 
 
-function onConceptSaveComplete(response, status)
+function onConsumptionSaveComplete(response, status)
 {
 	if (status == "success")
 	{
@@ -65,8 +65,8 @@ function onConceptSaveComplete(response, status)
 			$("#alertError").text("Unknown error while saving..");
 			$("#alertError").show();
 	}
-		$("#hidConceptIDSave").val("");
-		$("#formConcept")[0].reset();
+		$("#hidConIDSave").val("");
+		$("#formCon")[0].reset();
 }
 
 
@@ -74,16 +74,11 @@ function onConceptSaveComplete(response, status)
 //UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
-	$("#hidConceptIDSave").val($(this).data("conceptcode"));
-	$("#conceptName").val($(this).closest("tr").find('td:eq(1)').text());
-	$("#conceptDesc").val($(this).closest("tr").find('td:eq(2)').text());
-	$("#startDate").val($(this).closest("tr").find('td:eq(3)').text());
-	$("#deadline").val($(this).closest("tr").find('td:eq(4)').text());
-	$("#pledgeGoal").val($(this).closest("tr").find('td:eq(5)').text());
-	$("#reward").val($(this).closest("tr").find('td:eq(6)').text());
-	$("#workUpdt").val($(this).closest("tr").find('td:eq(9)').text());
-	$("#researcherID").val($(this).closest("tr").find('td:eq(10)').text());
-	$("#manufactID").val($(this).closest("tr").find('td:eq(11)').text());
+	$("#hidConIDSave").val($(this).data("conceptcode"));
+	$("#userID").val($(this).closest("tr").find('td:eq(1)').text());
+	$("#month").val($(this).closest("tr").find('td:eq(2)').text());
+	$("#premonreading").val($(this).closest("tr").find('td:eq(3)').text());
+	$("#curmonreading").val($(this).closest("tr").find('td:eq(4)').text());
 });
 
 
@@ -92,9 +87,9 @@ $(document).on("click", ".btnRemove", function(event)
 		{
 			$.ajax(
 			{
-				url : "ConceptAPI",
+				url : "ConsumptionAPI",
 				type : "DELETE",
-				data : "conceptCode=" + $(this).data("conceptcode"),
+				data : "conID=" + $(this).data("conID"),
 				dataType : "text",
 				complete : function(response, status)
 				{
@@ -132,71 +127,38 @@ function onItemDeleteComplete(response, status)
 
 
 //========== VALIDATION ================================================
-function validateConceptForm()
+function validateConsumptionForm()
 {
-		// Concept Name
-		if ($("#conceptName").val().trim() == "")
+		// Month
+		if ($("#month").val().trim() == "")
 		{
-			return "Insert Concept Name!!";
+			return "Insert Month!!";
 		}
 		
-		// Concept Description
-		if ($("#conceptDesc").val().trim() == "")
+		// Previous Month Reading
+		if ($("#premonreading").val().trim() == "")
 		{
-			return "Insert Concept Description!!";
+			return "Insert Previous Month Reading!!";
 		}
 		
-		// Concept Start Date
-		if ($("#startDate").val().trim() == "")
+		// Current Month Reading
+		if ($("#curmonreading").val().trim() == "")
 		{
-			return "Insert Start Date!!";
-		}
-		
-		// Concept deadline
-		if ($("#deadline").val().trim() == "")
-		{
-			return "Insert Deadline!!";
-		}
-		
-		// Concept pledge Goal
-		if ($("#pledgeGoal").val().trim() == "")
-		{
-			return "Insert Pledge Goal!!";
+			return "Insert Current Month Reading!!";
 		}
 		
 		// is numerical value
-		var pledgeGoal = $("#pledgeGoal").val().trim();
-		if (!$.isNumeric(pledgeGoal))
+		var premonreading = $("#premonreading").val().trim();
+		if (!$.isNumeric(premonreading))
 		{
-			return "Invalid Pledge Goal (Please enter a number)";
+			return "Invalid Previous Month Reading (Please enter a number)";
 		}
 		
-		// Concept Reward
-		if ($("#reward").val().trim() == "")
+		var curmonreading = $("#curmonreading").val().trim();
+		if (!$.isNumeric(curmonreading))
 		{
-			return "Insert Reward!!";
+			return "Invalid Current Month Reading (Please enter a number)";
 		}
-		
-		// Concept Work Update
-		if ($("#workUpdt").val().trim() == "")
-		{
-			return "Insert Work Update!!";
-		}
-		
-		// Researcher ID
-		if ($("#researcherID").val().trim() == "")
-		{
-			return "Insert Researcher ID!!";
-		}
-		
-		// Manufacturer ID
-		if ($("#manufactID").val().trim() == "")
-		{
-			return "Insert Manufacturer ID!!";
-		}
-		
-		// convert to decimal price
-		$("#pledgeGoal").val(parseFloat(pledgeGoal).toFixed(2));
 		
 		return true;
 }

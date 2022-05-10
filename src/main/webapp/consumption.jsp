@@ -1,15 +1,15 @@
+<%@page import="util.DBConnection"%>
 <%@page import="recources.Consumption"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
-<%@page import="util.UserDBConnection"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Insert title here</title>
+	<title>Consumption Monitoring Management</title>
 	
 	<!-- Linking the css scripts -->
 	<link rel="stylesheet" href="Views/bootstrap.min.css">
@@ -22,7 +22,7 @@
 </head>
 <body>
 
-	<% UserDBConnection userConn = new UserDBConnection(); %>
+	<% DBConnection userConn = new DBConnection(); %>
 		
 	<div class="container">
 	<div class="row">
@@ -30,19 +30,19 @@
 		<h1 align="center">Consumption Monitoring Management</h1>
 		
 		<!--------------------- Start of form  ------------------------------->
-		<form id="formConcept" name="formConcept">
+		<form id="formCon" name="formCon">
 			<select id = "userID" name = "userID" class="form-control form-control-sm">
-            	<option class="dropdown-menu">Researcher Name</option>
+            	<option class="dropdown-menu">User ID</option>
                     <%
                     	try{
                     		Connection con = userConn.connect();
                     		Statement st = con.createStatement();
-                    		String query = "select * from researcher";
+                    		String query = "select * from users";
                     		ResultSet rs = st.executeQuery(query);
                     			
                     		while(rs.next()){
                     			%>
-                    			<option value="<%=rs.getString("researcherCode")%>"><%=rs.getString("userName") %></option>
+                    			<option value="<%=rs.getString("userID")%>"><%=rs.getString("userID") %></option>
                     				<%
                     		}
                     		con.close();
@@ -53,17 +53,17 @@
             </select>
 			<br> 
 		
-			<input id="month" name="month" type="text"class="form-control form-control-sm" placeholder="Month">
+			<input id="month" name="month" type="month" class="form-control form-control-sm" placeholder="Month">
 			<br> 
             
             <input id="premonreading" name="premonreading" type="text" class="form-control form-control-sm" placeholder="Previous Month Reading">
 			<br> 
 			
-			<input id="curmonreading" name="curmonreading" type="text"class="form-control form-control-sm" placeholder="Current Month Reading">
+			<input id="curmonreading" name="curmonreading" type="text" class="form-control form-control-sm" placeholder="Current Month Reading">
 			<br> 
             
 			<input id="btnSave" name="btnSave" type="button" value="Add Consumption" class="btn btn-primary">
-            <input type="hidden" id="conID" name="conID" value="">
+            <input type="hidden" id="hidConIDSave" name="hidConIDSave" value="">
 		</form>
 		<!--------------------- End of form  ------------------------------->
 		
