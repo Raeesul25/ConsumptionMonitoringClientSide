@@ -17,7 +17,7 @@ $(document).on("click", "#btnSave", function(event)
 	$("#alertError").hide();
 		
 	// Form validation-------------------
-	var status = validateConceptForm();
+	var status = validateConsumptionForm();
 	if (status != true){
 		$("#alertError").text(status);
 		$("#alertError").show();
@@ -33,7 +33,7 @@ $(document).on("click", "#btnSave", function(event)
 		data : $("#formCon").serialize(),
 		dataType : "text",
 		complete : function(response, status){
-			onConceptSaveComplete(response.responseText, status);
+			onConsumptionSaveComplete(response.responseText, status);
 		}
 		});
 });
@@ -74,7 +74,7 @@ function onConsumptionSaveComplete(response, status)
 //UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
-	$("#hidConIDSave").val($(this).data("conceptcode"));
+	$("#hidConIDSave").val($(this).data("conID"));
 	$("#userID").val($(this).closest("tr").find('td:eq(1)').text());
 	$("#month").val($(this).closest("tr").find('td:eq(2)').text());
 	$("#premonreading").val($(this).closest("tr").find('td:eq(3)').text());
@@ -93,13 +93,13 @@ $(document).on("click", ".btnRemove", function(event)
 				dataType : "text",
 				complete : function(response, status)
 				{
-					onItemDeleteComplete(response.responseText, status);
+					onConsumptionDeleteComplete(response.responseText, status);
 				}
 			});
 });
 
 
-function onItemDeleteComplete(response, status)
+function onConsumptionDeleteComplete(response, status)
 {
 	if (status == "success")
 	{

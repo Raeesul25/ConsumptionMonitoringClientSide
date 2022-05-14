@@ -17,7 +17,7 @@
 	
 	<!-- Linking the js files -->
 	<script src="Components/jquery-3.2.1.min.js"></script>
-	<script src="Components/concept.js"></script>
+	<script src="Components/consumption.js"></script>
 	
 </head>
 <body>
@@ -31,7 +31,7 @@
 		
 		<!--------------------- Start of form  ------------------------------->
 		<form id="formCon" name="formCon">
-			<select id = "userID" name = "userID" class="form-control form-control-sm">
+			<select id="userID" name="userID" class="form-control form-control-sm">
             	<option class="dropdown-menu">User ID</option>
                     <%
                     	try{
@@ -43,7 +43,7 @@
                     		while(rs.next()){
                     			%>
                     			<option value="<%=rs.getString("userID")%>"><%=rs.getString("userID") %></option>
-                    				<%
+                    			<%
                     		}
                     		con.close();
                     	}catch(Exception e){

@@ -54,7 +54,8 @@ public class ConsumptionAPI extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -62,36 +63,42 @@ public class ConsumptionAPI extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String output = con.insertConsumption(request.getParameter("userID"), 
 				request.getParameter("month"), 
 				request.getParameter("premonreading"), 
 				request.getParameter("curmonreading"));
-			response.getWriter().write(output);
+			
+		response.getWriter().write(output);
 	}
 
 	/**
 	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
 	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request);
-		String output = con.updateConsumption(paras.get("conID").toString(), 
+		String output = con.updateConsumption(paras.get("hidConIDSave").toString(), 
 				paras.get("userID").toString(), 
 				paras.get("month").toString(), 
 				paras.get("premonreading").toString(), 
 				paras.get("curmonreading").toString());
+		
 		response.getWriter().write(output);
 	}
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request);
 		String output = con.deleteConsumption(paras.get("conID").toString());
+		
 		response.getWriter().write(output);
 	}
 

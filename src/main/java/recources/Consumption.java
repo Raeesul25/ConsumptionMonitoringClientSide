@@ -24,9 +24,10 @@ public class Consumption {
 				return dbErrorMessage; 	
 			}
 			// create a prepared statement
-			String query = " insert into consumption(conID,userID,month,preMonReading,curMonReading,conUnits) VALUES (?, ?, ?, ?, ?, ?)";
+			String query = "insert into consumption(conID,userID,month,preMonReading,curMonReading,conUnits) VALUES (?, ?, ?, ?, ?, ?)";
 			
 			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
 			// binding values
 			preparedStmt.setInt(1, 0);
 			preparedStmt.setString(2, userID);
@@ -43,8 +44,8 @@ public class Consumption {
 			preparedStmt.execute();
 			con.close();
 			
-			String newConcepts = readConsumption();
-			output = "{\"status\":\"success\", \"data\": \"" +newConcepts + "\"}";
+			String newConsumptions = readConsumption();
+			output = "{\"status\":\"success\", \"data\": \"" +newConsumptions + "\"}";
 			
 		}catch (Exception e){
 			output = "{\"status\":\"error\", \"data\":\"Error while launching the consumption\"}";
@@ -87,8 +88,8 @@ public class Consumption {
 		
 			con.close();
 			
-			String newItems = readConsumption();
-			output = "{\"status\":\"success\", \"data\": \"" +newItems + "\"}";
+			String newConsumptions = readConsumption();
+			output = "{\"status\":\"success\", \"data\": \"" +newConsumptions + "\"}";
 		
 		}catch (Exception e){
 			output = "{\"status\":\"error\", \"data\":\"Error while updating the consumption\"}";
@@ -119,8 +120,8 @@ public class Consumption {
 
 			con.close();
 			
-			String newItems = readConsumption();
-			output = "{\"status\":\"success\", \"data\": \"" +newItems + "\"}";
+			String newConsumptions = readConsumption();
+			output = "{\"status\":\"success\", \"data\": \"" +newConsumptions + "\"}";
 			
 		}catch (Exception e){
 			output = "{\"status\":\"error\", \"data\":\"Error while deleting the consumption\"}";
@@ -145,6 +146,7 @@ public class Consumption {
 			"<th>Current Month Reading</th>" +
 			"<th>Consumption units</th>" +
 			"<th>Update</th><th>Delete</th></tr>";
+			
 			String query = "select * from consumption";
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
@@ -159,7 +161,9 @@ public class Consumption {
 				String conunits = Integer.toString(rs.getInt("conUnits"));
 			
 				// Add into the html table
-				output += "<tr><td>" + conID + "</td>";
+				output += "<tr><td><input id='hidConIDUpdate'"
+						+ "name='hidConIDUpdate' type='hidden'"
+						+ "value='" + conID + "'>" + conID + "</td>";
 				output += "<td>" + userID + "</td>";
 				output += "<td>" + month + "</td>";
 				output += "<td>" + premonread + "</td>";
@@ -172,7 +176,6 @@ public class Consumption {
 						+ "<td><input name='btnRemove' type='button' value='Remove' "
 						+ "class='btnRemove btn btn-danger' data-conID='" + conID + "'></td></tr>";
 				
-
 			}
 			
 			con.close();
