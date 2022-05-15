@@ -53,7 +53,7 @@
             </select>
 			<br> 
 		
-			<input id="month" name="month" type="month" class="form-control form-control-sm" placeholder="Month">
+			<input id="month" name="month" type="text" class="form-control form-control-sm" placeholder="Month">
 			<br> 
             
             <input id="premonreading" name="premonreading" type="text" class="form-control form-control-sm" placeholder="Previous Month Reading">

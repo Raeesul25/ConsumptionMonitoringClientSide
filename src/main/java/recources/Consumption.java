@@ -172,9 +172,9 @@ public class Consumption {
 			
 				// button for updating a consumption
 				output += "<td><input name='btnUpdate' type='button' value='Update' "
-						+ "class='btnUpdate btn btn-secondary' data-conID='" + conID + "'></td>"
+						+ "class='btnUpdate btn btn-secondary' data-conid='" + conID + "'></td>"
 						+ "<td><input name='btnRemove' type='button' value='Remove' "
-						+ "class='btnRemove btn btn-danger' data-conID='" + conID + "'></td></tr>";
+						+ "class='btnRemove btn btn-danger' data-conid='" + conID + "'></td></tr>";
 				
 			}
 			

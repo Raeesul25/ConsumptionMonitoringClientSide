@@ -74,7 +74,7 @@ function onConsumptionSaveComplete(response, status)
 //UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
-	$("#hidConIDSave").val($(this).data("conID"));
+	$("#hidConIDSave").val($(this).data("conid"));
 	$("#userID").val($(this).closest("tr").find('td:eq(1)').text());
 	$("#month").val($(this).closest("tr").find('td:eq(2)').text());
 	$("#premonreading").val($(this).closest("tr").find('td:eq(3)').text());
@@ -89,7 +89,7 @@ $(document).on("click", ".btnRemove", function(event)
 			{
 				url : "ConsumptionAPI",
 				type : "DELETE",
-				data : "conID=" + $(this).data("conID"),
+				data : "conID=" + $(this).data("conid"),
 				dataType : "text",
 				complete : function(response, status)
 				{
